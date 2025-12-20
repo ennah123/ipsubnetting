@@ -57,12 +57,20 @@
         const ip = document.getElementById('ip').value
         const nbNetworks = 2 ** (32 - mask)
         if (mask < 1 || mask > 32) return 
-
+        const table = document.getElementById('res')
         if (mask === 32) {
-            display.innerText = "resaultNetwork: " + ip + "\nresaultBroadcast: " + ip + "\nfirstAddress: "+ "no" + "\nlastAddress: "+ "no"
+              table.innerHTML = `
+                <tr><th class='text-start'>IP Adresse</th> <td>${ip}</td></tr>
+                <tr><th class='text-start'>Network Adresse</th> <td>${ip}</td></tr>
+                <tr><th class='text-start'>Broadcast Adresse</th> <td>${ip}</td></tr>
+                <tr><th class='text-start'>First usable Adresse</th> <td>none</td></tr>
+                <tr><th class='text-start'>Last usable Adresse</th> <td>none</td></tr>
+                <tr><th class='text-start'>Total Hosts</th> <td>1</td></tr>
+                <tr><th class='text-start'>Total Usable Hosts</th> <td>0</td></tr>
+                `
         }
         else{ 
-        const display = document.getElementById('display')
+        
         const part = mask >= 1 && mask < 8? 0: mask >= 8 && mask < 16? 1: mask >= 16 && mask < 24? 2: 3
 
         const splitedIP = ip.split(".")
@@ -116,7 +124,7 @@
         }
 
 
-        const table = document.getElementById('res')
+        
         table.innerHTML = `
            <tr><th class='text-start'>IP Adresse</th> <td>${ip}</td></tr>
            <tr><th class='text-start'>Network Adresse</th> <td>${resaultNetwork}</td></tr>
