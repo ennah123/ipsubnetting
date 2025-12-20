@@ -53,9 +53,8 @@
 <script>
     function subnet() {
         const mask = Number(document.getElementById('mask').value)
-        const nbNetworks = 2 ** mask
         const ip = document.getElementById('ip').value
-
+        const nbNetworks = 2 ** (32 - mask)
         if (mask < 1 || mask > 32) return 
 
         if (mask === 32) {
