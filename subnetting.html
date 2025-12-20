@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div>
+        <input type="text" id="ip" value="172.31.200.15">
+        <input type="number" id="mask" value="21">
+        <button onclick="subnet()">submit</button>
+        <div id="display"></div>
+    </div>
+    <table id="res" border="1">
+    </table>
+</body>
+<script>
+    function subnet() {
+        const mask = Number(document.getElementById('mask').value)
+        const ip = document.getElementById('ip').value
+
+        if (mask < 1 || mask > 32) return 
+
+        if (mask === 32) {
+            display.innerText = "resaultNetwork: " + ip + "\nresaultBroadcast: " + ip + "\nfirstAddress: "+ "no" + "\nlastAddress: "+ "no"
+        }
+        else{ 
+        const display = document.getElementById('display')
+        const part = mask >= 1 && mask < 8? 0: mask >= 8 && mask < 16? 1: mask >= 16 && mask < 24? 2: 3
+
+        const splitedIP = ip.split(".")
+        const splitedPartBinary = Number(splitedIP[part]).toString(2).padStart(8, '0')
+
+        let mask2 = mask >= 8 ? mask - 8 : mask
+
+        while (mask2 >= 8) {
+           mask2 -= 8 
+        }
+
+        const network = splitedPartBinary.slice(0, mask2) + '0'.repeat(splitedPartBinary.length - mask2)
+        const broadcast = splitedPartBinary.slice(0, mask2) + '1'.repeat(splitedPartBinary.length - mask2)
+
+        let resaultNetwork = ""
+        let resaultBroadcast = ""
+        let firstAddress = ""
+        let lastAddress = ""
+
+        switch (part) {
+            case 0:
+                resaultNetwork = `${parseInt(network, 2)}.0.0.0`
+                firstAddress = `${parseInt(network, 2)}.0.0.1`
+                lastAddress = `${parseInt(broadcast, 2)}.255.255.254`
+                resaultBroadcast = `${parseInt(broadcast, 2)}.255.255.255`
+                break;
+            
+            case 1:
+                resaultNetwork = `${splitedIP[0]}.${parseInt(network, 2)}.0.0`
+                firstAddress = `${splitedIP[0]}.${parseInt(network, 2)}.0.1`
+                lastAddress = `${splitedIP[0]}.${parseInt(broadcast, 2)}.255.254`
+                resaultBroadcast = `${splitedIP[0]}.${parseInt(broadcast, 2)}.255.255`
+                break;
+            
+            case 2:
+                resaultNetwork = `${splitedIP[0]}.${splitedIP[1]}.${parseInt(network, 2)}.0`
+                firstAddress = `${splitedIP[0]}.${splitedIP[1]}.${parseInt(network, 2)}.1`
+                lastAddress = `${splitedIP[0]}.${splitedIP[1]}.${parseInt(broadcast, 2)}.254`
+                resaultBroadcast = `${splitedIP[0]}.${splitedIP[1]}.${parseInt(broadcast, 2)}.255`
+                break;
+            
+            case 3:
+                resaultNetwork = `${splitedIP[0]}.${splitedIP[1]}.${splitedIP[2]}.${parseInt(network, 2)}`
+                firstAddress = mask === 31 ? "no" : `${splitedIP[0]}.${splitedIP[1]}.${splitedIP[2]}.${parseInt(network, 2)+1}`
+                lastAddress = mask === 31 ? "no" : `${splitedIP[0]}.${splitedIP[1]}.${splitedIP[2]}.${parseInt(broadcast, 2)-1}`
+                resaultBroadcast = `${splitedIP[0]}.${splitedIP[1]}.${splitedIP[2]}.${parseInt(broadcast, 2)}`
+                break;
+            
+            default:
+                break;
+        }
+
+        // display.innerText = parseInt(network, 2) + " \n" + parseInt(broadcast, 2) + "  \n mask2: " + mask2 + "\n part: " + (part + 1)
+        // display.innerHTML += "<br><br>"
+
+
+        const table = document.getElementById('res')
+        table.innerHTML = `
+           <tr><th>IP Adresse</th> <td>${ip}</td></tr>
+           <tr><th>Network Adresse</th> <td>${resaultNetwork}</td></tr>
+           <tr><th>Broadcast Adresse</th> <td>${resaultBroadcast}</td></tr>
+           <tr><th>First usable Adresse</th> <td>${firstAddress}</td></tr>
+           <tr><th>Last usable Adresse</th> <td>${lastAddress}</td></tr>
+        `
+
+        // display.innerText = "resaultNetwork: " + resaultNetwork + "\nresaultBroadcast: " + resaultBroadcast + "\nfirstAddress: "+ firstAddress + "\nlastAddress: "+ lastAddress
+        }
+    }
+</script>
+</html>
