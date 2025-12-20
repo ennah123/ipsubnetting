@@ -4,19 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div>
-        <input type="text" id="ip" value="172.31.200.15">
-        <input type="number" id="mask" value="21">
-        <button onclick="subnet()">submit</button>
-        <div id="display"></div>
+   <div class="min-h-screen bg-gray-50 flex items-center justify-center p-6 font-mono text-slate-800">
+    <div class="w-full max-w-2xl bg-white border border-emerald-200 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.04)] overflow-hidden">
+        
+
+        <div class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="md:col-span-2">
+                    <label class="block text-[10px] uppercase mb-2 text-emerald-600 font-bold tracking-widest">IP_ADDRESS</label>
+                    <input type="text" id="ip" value="172.31.200.15" 
+                        class="w-full bg-gray-50 border border-gray-200 rounded p-3 text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
+                        placeholder="0.0.0.0">
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase mb-2 text-emerald-600 font-bold tracking-widest">MASK</label>
+                    <div class="flex items-center bg-gray-50 border border-gray-200 rounded px-3">
+                        <span class="text-emerald-600 font-bold">/</span>
+                        <input type="number" id="mask" value="21" 
+                            class="w-full bg-transparent border-none p-3 text-lg text-slate-700 focus:ring-0 outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="subnet()" 
+                class="group relative w-full overflow-hidden bg-emerald-600 border border-emerald-700 py-4 rounded font-bold uppercase tracking-widest text-white transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-emerald-200">
+                <span class="relative z-10">CALCULATE</span>
+                <div class="absolute inset-0 bg-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+            </button>
+
+            <div id="display" class="mt-4 text-center text-red-500 text-xs italic min-h-[1.25rem]"></div>
+
+            <div class="mt-8 relative">
+                <div class="absolute -top-3 left-4 bg-white px-2 text-[10px] text-emerald-600 font-bold uppercase tracking-tighter">RESUALT</div>
+                <div class="bg-gray-50/50 border border-gray-100 p-4 rounded-md">
+                    <table id="res" class="w-full">
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <table id="res" border="1">
-    </table>
+</div>
 </body>
 <script>
     function subnet() {
@@ -88,11 +120,11 @@
 
         const table = document.getElementById('res')
         table.innerHTML = `
-           <tr><th>IP Adresse</th> <td>${ip}</td></tr>
-           <tr><th>Network Adresse</th> <td>${resaultNetwork}</td></tr>
-           <tr><th>Broadcast Adresse</th> <td>${resaultBroadcast}</td></tr>
-           <tr><th>First usable Adresse</th> <td>${firstAddress}</td></tr>
-           <tr><th>Last usable Adresse</th> <td>${lastAddress}</td></tr>
+           <tr><th class='text-start'>IP Adresse</th> <td>${ip}</td></tr>
+           <tr><th class='text-start'>Network Adresse</th> <td>${resaultNetwork}</td></tr>
+           <tr><th class='text-start'>Broadcast Adresse</th> <td>${resaultBroadcast}</td></tr>
+           <tr><th class='text-start'>First usable Adresse</th> <td>${firstAddress}</td></tr>
+           <tr><th class='text-start'>Last usable Adresse</th> <td>${lastAddress}</td></tr>
         `
 
         // display.innerText = "resaultNetwork: " + resaultNetwork + "\nresaultBroadcast: " + resaultBroadcast + "\nfirstAddress: "+ firstAddress + "\nlastAddress: "+ lastAddress
