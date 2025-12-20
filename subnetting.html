@@ -53,6 +53,7 @@
 <script>
     function subnet() {
         const mask = Number(document.getElementById('mask').value)
+        const nbNetworks = 2 ** mask
         const ip = document.getElementById('ip').value
 
         if (mask < 1 || mask > 32) return 
@@ -114,9 +115,6 @@
                 break;
         }
 
-        // display.innerText = parseInt(network, 2) + " \n" + parseInt(broadcast, 2) + "  \n mask2: " + mask2 + "\n part: " + (part + 1)
-        // display.innerHTML += "<br><br>"
-
 
         const table = document.getElementById('res')
         table.innerHTML = `
@@ -125,9 +123,9 @@
            <tr><th class='text-start'>Broadcast Adresse</th> <td>${resaultBroadcast}</td></tr>
            <tr><th class='text-start'>First usable Adresse</th> <td>${firstAddress}</td></tr>
            <tr><th class='text-start'>Last usable Adresse</th> <td>${lastAddress}</td></tr>
+           <tr><th class='text-start'>Total Hosts</th> <td>${nbNetworks}</td></tr>
+           <tr><th class='text-start'>Total Usable Hosts</th> <td>${nbNetworks - 2}</td></tr>
         `
-
-        // display.innerText = "resaultNetwork: " + resaultNetwork + "\nresaultBroadcast: " + resaultBroadcast + "\nfirstAddress: "+ firstAddress + "\nlastAddress: "+ lastAddress
         }
     }
 </script>
