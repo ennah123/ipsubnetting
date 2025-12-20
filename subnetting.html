@@ -15,15 +15,16 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="md:col-span-2">
                     <label class="block text-[10px] uppercase mb-2 text-emerald-600 font-bold tracking-widest">IP_ADDRESS</label>
-                    <input type="text" id="ip" value="172.31.200.15" 
+                    <input type="text" id="ip" 
                         class="w-full bg-gray-50 border border-gray-200 rounded p-3 text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
-                        placeholder="0.0.0.0">
+                        placeholder="192.168.1.0">
                 </div>
                 <div>
                     <label class="block text-[10px] uppercase mb-2 text-emerald-600 font-bold tracking-widest">MASK</label>
                     <div class="flex items-center bg-gray-50 border border-gray-200 rounded px-3">
                         <span class="text-emerald-600 font-bold">/</span>
-                        <input type="number" id="mask" value="21" 
+                        <input type="number" id="mask" 
+                            placeholder="24" 
                             class="w-full bg-transparent border-none p-3 text-lg text-slate-700 focus:ring-0 outline-none">
                     </div>
                 </div>
