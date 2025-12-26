@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholder="ip" id="ip" value="172.16.77.120">
+    <input type="text" placeholder="initialMask" id="initialMask" value="255.255.0.0">
+    <input type="text" placeholder="newMask" id="newMask" value="255.255.240.0">
+    <button onclick="calculate()">calculate</button>
+    <div id="display"></div>
+</body>
+<script>
+    const subnetMasks = [
+        {"255.0.0.0": 8},
+        {"255.128.0.0": 9},
+        {"255.192.0.0": 10},
+        {"255.224.0.0": 11},
+        {"255.240.0.0": 12},
+        {"255.248.0.0": 13},
+        {"255.252.0.0": 14},
+        {"255.254.0.0": 15},
+        {"255.255.0.0": 16},
+        {"255.255.128.0": 17},
+        {"255.255.192.0": 18},
+        {"255.255.224.0": 19},
+        {"255.255.240.0": 20},
+        {"255.255.248.0": 21},
+        {"255.255.252.0": 22},
+        {"255.255.254.0": 23},
+        {"255.255.255.0": 24},
+        {"255.255.255.128": 25},
+        {"255.255.255.192": 26},
+        {"255.255.255.224": 27},
+        {"255.255.255.240": 28},
+        {"255.255.255.248": 29},
+        {"255.255.255.252": 30},
+        {"255.255.255.254": 31},
+        {"255.255.255.255": 32}
+    ]
+    // const cidr = subnetMasks.find(obj => obj[mask])[mask]
+    const display = document.getElementById('display')
+
+    function calculate() {
+        const ip = document.getElementById('ip').value
+        let initialMask = document.getElementById('initialMask').value
+        let newMask = document.getElementById('newMask').value
+        const newMask1 = newMask
+        initialMask = subnetMasks.find(obj => obj[initialMask])[initialMask]
+        newMask = subnetMasks.find(obj => obj[newMask])[newMask]
+
+        const nbBitsSubnet = newMask - initialMask
+        const nbTotalSubnets = 2 ** nbBitsSubnet
+        const nbBitsHostsPerSubnet = 32 - newMask
+        const nbHostsPerSubnet = (2 ** nbBitsHostsPerSubnet) - 2
+        display.innerText = `1) ${nbBitsSubnet} \n 2) ${nbTotalSubnets} \n 3) ${nbBitsHostsPerSubnet} \n 4) ${nbHostsPerSubnet}`
+
+        const splitedIP = ip.split('.')
+        const splitedMask = newMask1.split('.')
+        const indexIP = newMask >= 1 && newMask < 8? 0: newMask >= 8 && newMask < 16? 1: newMask >= 16 && newMask < 24? 2: 3
+
+       const octetIP = Number(splitedIP[indexIP])
+       const octetMask = Number(splitedMask[indexIP])
+       const MG = 256 - octetMask
+
+       let min = 0
+       let max = MG
+
+       while (!(octetIP >= min && octetIP < max)) {
+           min = max
+           max += MG
+       }
+       max--
+       let startIP = ''
+       for (let i = 0; i < indexIP; i++) {
+            startIP += splitedIP[i]
+            if (i < indexIP - 1) startIP += '.'
+        }
+        let network = ""
+        let broadcast = ""
+        let firstAddress = ""
+        let lastAddress = ""
+        switch (indexIP) {
+            case 0:
+                network = `${min}.0.0.0`
+                firstAddress = `${min}.0.0.1`
+                lastAddress = `${max}.255.255.254`
+                broadcast = `${max}.255.255.255`
+                break;
+            
+            case 1:
+                network = `${startIP}.${min}.0.0`
+                firstAddress = `${startIP}.${min}.0.1`
+                lastAddress = `${startIP}.${max}.255.254`
+                broadcast = `${startIP}.${max}.255.255`
+                break;
+            
+            case 2:
+                network = `${startIP}.${min}.0`
+                firstAddress = `${startIP}.${min}.1`
+                lastAddress = `${startIP}.${max}.254`
+                broadcast = `${startIP}.${max}.255`
+                break;
+            
+            case 3:
+                network = `${startIP}.${min}`
+                firstAddress = `${startIP}.${min + 1}`
+                lastAddress = `${startIP}.${max  - 1}`
+                broadcast = `${startIP}.${max}`
+                break;
+        
+            default:
+                break;
+        }
+
+       display.innerText += `\n Network: ${network} \n First Addresse: ${firstAddress} \n Last Addresse: ${lastAddress} \n Broadcast Addresse: ${broadcast}`
+
+
+    }
+</script>
+</html>
