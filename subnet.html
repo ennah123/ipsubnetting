@@ -7,6 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50">
+    <nav class="absolute top-10 left-10 flex items-center space-x-2 text-xs font-semibold tracking-wide">
+        <a href="index.html"><span class="text-gray-500 uppercase text-xs cursor-pointer">Subnet_Calculation</span></a>
+        <span class="text-gray-400">/</span>
+        <span class="text-emerald-600 uppercase text-xs cursor-pointer">IP_Subnetting</span>
+    </nav>
+
+
+
     <div class="flex-grow flex items-center justify-center p-3 sm:p-4 md:p-8 font-mono text-slate-800">
         <div class="w-full max-w-5xl bg-white border border-emerald-200 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.04)] overflow-hidden mx-2 sm:mx-4">
             
@@ -22,20 +30,20 @@
                                 <label class="block text-[10px] uppercase mb-1 sm:mb-2 text-emerald-600 font-bold tracking-widest">IP_ADDRESS</label>
                                 <input type="text" id="ip" 
                                     class="w-full bg-gray-50 border border-gray-200 rounded p-2 sm:p-3 text-base sm:text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
-                                    placeholder="172.16.77.120" value="172.16.77.120">
+                                    placeholder="172.16.77.120">
                             </div>
 
                                 <div>
                                     <label class="block text-[10px] uppercase mb-1 sm:mb-2 text-emerald-600 font-bold tracking-widest">INITIAL_MASK</label>
                                     <input type="text" id="initialMask" 
                                         class="w-full bg-gray-50 border border-gray-200 rounded p-2 sm:p-3 text-base sm:text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
-                                        placeholder="255.255.0.0" value="255.255.0.0">
+                                        placeholder="255.255.0.0">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] uppercase mb-1 sm:mb-2 text-emerald-600 font-bold tracking-widest">NEW_MASK</label>
                                     <input type="text" id="newMask" 
                                         class="w-full bg-gray-50 border border-gray-200 rounded p-2 sm:p-3 text-base sm:text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
-                                        placeholder="255.255.240.0" value="255.255.240.0">
+                                        placeholder="255.255.240.0">
                                 </div>
 
                             <button onclick="calculate()" 
@@ -53,9 +61,7 @@
                                 <table class="w-full text-xs sm:text-sm">
                                     <tbody id="res-table">
                                         <tr>
-                                            <td class="text-gray-400 text-center italic py-8 sm:py-10">
-                                                Results will appear here<br>after calculation
-                                            </td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -68,9 +74,9 @@
         </div>
     </div>
     
-    <footer class="mt-auto py-4 sm:py-6 text-xs sm:text-sm w-full text-center text-slate-700">
-        <p>© <span id="year"></span> <a href="https://ennah-ouldlakhlifa.com" class="font-bold hover:text-emerald-600 transition-colors" target="_blank" rel="noopener noreferrer">Ennah Ouldlakhlifa</a>. All rights reserved.</p>
-    </footer>
+    <footer class="absolute bottom-1 py-4 sm:py-6 text-xs sm:text-sm w-full text-center text-slate-700">
+        <p class="text-xs">© <span id="year text-xs"></span> <a href="https://ennah-ouldlakhlifa.com" class="font-bold text-xs text-emerald-700 hover:text-emerald-600 transition-colors" target="_blank" rel="noopener noreferrer">Ennah Ouldlakhlifa</a>. All rights reserved.</p>
+</footer>
 
     <script>
         const date = new Date()
