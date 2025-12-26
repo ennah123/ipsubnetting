@@ -30,23 +30,23 @@
                                 <label class="block text-[10px] uppercase mb-1 sm:mb-2 text-emerald-600 font-bold tracking-widest">IP_ADDRESS</label>
                                 <input type="text" id="ip" 
                                     class="w-full bg-gray-50 border border-gray-200 rounded p-2 sm:p-3 text-base sm:text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
-                                    placeholder="172.16.77.120">
+                                    placeholder="172.16.77.120" value="172.16.77.120">
                             </div>
 
                                 <div>
                                     <label class="block text-[10px] uppercase mb-1 sm:mb-2 text-emerald-600 font-bold tracking-widest">INITIAL_MASK</label>
                                     <input type="text" id="initialMask" 
                                         class="w-full bg-gray-50 border border-gray-200 rounded p-2 sm:p-3 text-base sm:text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
-                                        placeholder="255.255.0.0">
+                                        placeholder="255.255.0.0" value="255.255.0.0">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] uppercase mb-1 sm:mb-2 text-emerald-600 font-bold tracking-widest">NEW_MASK</label>
                                     <input type="text" id="newMask" 
                                         class="w-full bg-gray-50 border border-gray-200 rounded p-2 sm:p-3 text-base sm:text-lg text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder:text-gray-300" 
-                                        placeholder="255.255.240.0">
+                                        placeholder="255.255.240.0" value="255.255.240.0">
                                 </div>
 
-                            <button onclick="calculate()" 
+                            <button id="calcBtn" 
                                 class="group relative w-full overflow-hidden bg-emerald-600 border border-emerald-700 py-3 sm:py-4 rounded font-bold uppercase tracking-widest text-white text-sm sm:text-base transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-emerald-200 mt-2 sm:mt-3 md:mt-4">
                                 <span class="relative z-10">CALCULATE</span>
                                 <div class="absolute inset-0 bg-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
@@ -78,7 +78,7 @@
     </div>
     
     <footer class="absolute bottom-1 py-4 sm:py-6 text-xs sm:text-sm w-full text-center text-slate-700">
-        <p class="text-xs">© <span id="year text-xs"></span> <a href="https://ennah-ouldlakhlifa.com" class="font-bold text-xs text-emerald-700 hover:text-emerald-600 transition-colors" target="_blank" rel="noopener noreferrer">Ennah Ouldlakhlifa</a>. All rights reserved.</p>
+        <p class="text-xs">© <span id="year"></span> <a href="https://ennah-ouldlakhlifa.com" class="font-bold text-xs text-emerald-700 hover:text-emerald-600 transition-colors" target="_blank" rel="noopener noreferrer">Ennah Ouldlakhlifa</a>. All rights reserved.</p>
 </footer>
 
     <script>
@@ -118,10 +118,10 @@
             const ip = document.getElementById('ip').value
             let initialMaskInput = document.getElementById('initialMask').value
             let newMaskInput = document.getElementById('newMask').value
-            const errorDisplay = document.getElementById('error-display')
+            // const errorDisplay = document.getElementById('error-display')
             const tableBody = document.getElementById('res-table')
             
-            errorDisplay.innerText = ""
+            // errorDisplay.innerText = ""
 
             const initialMaskObj = subnetMasks.find(obj => obj[initialMaskInput])
             const newMaskObj = subnetMasks.find(obj => obj[newMaskInput])
@@ -219,6 +219,7 @@
                 ${row("Broadcast", broadcast)}
             `
         }
+        document.getElementById("calcBtn").addEventListener("click", calculate);
     </script>
 </body>
 </html>
